@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stop Watch</title>
+    <link href="stop.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 id="heading1">STOP WATCH</h1>
+        <span id="min">00</span>
+        <span>:</span>
+        <span id="sec">00</span>
+        <div id="buttons">
+            <button id="but1">Start</button>
+            <button id="but2">Stop</button>
+            <button id="but3">Reset</button>
+        </div>
+    </div>
+    <script>
+        let intervalId; // Declare intervalId outside the functions
+        let min = 0; // Initialize minutes
+        let sec = 0; // Initialize seconds
+
+        function start() {
+            clearInterval(intervalId); // Clear any existing interval
+            update(); // Update the display immediately
+            intervalId = setInterval(update, 500); // Start a new interval
+        }
+
+        function stop() {
+            clearInterval(intervalId); // Clear the interval
+        }
+
+        function update() {
+            document.getElementById('min').innerHTML = min < 10 ? '0' + min : min;
+            document.getElementById('sec').innerHTML = sec < 10 ? '0' + sec : sec;
+            sec++;
+            if (sec === 60) {
+                sec = 0;
+                min++;
+            }
+        }
+
+        function reset() {
+            clearInterval(intervalId); // Clear the interval
+            min = 0; // Reset minutes to 0
+            sec = 0; // Reset seconds to 0
+            document.getElementById('min').innerHTML = '00';
+            document.getElementById('sec').innerHTML = '00';
+        }
+
+        document.getElementById('but1').addEventListener("click", start);
+        document.getElementById('but2').addEventListener("click", stop);
+        document.getElementById('but3').addEventListener("click", reset);
+    </script>
+</body>
+</html>
