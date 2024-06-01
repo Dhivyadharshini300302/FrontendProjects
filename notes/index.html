@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 id="notes"><i class="fa-solid fa-note-sticky"></i> Notes</h1>
+        <button id="btn">Create Notes</button>
+        <div id="input"></div>
+    </div>
+    <script>
+        const button = document.getElementById("btn");
+        button.addEventListener('click', () => {
+            const inputContainer = document.getElementById('input');
+            const divContainer = document.createElement('div');
+            divContainer.className = 'note-container';
+
+            const noteTextarea = document.createElement('textarea');
+            noteTextarea.className = 'note-text';
+
+            const trashIcon = document.createElement('i');
+            trashIcon.className = 'fa-solid fa-trash trash-icon';
+            trashIcon.addEventListener('click', () => {
+                inputContainer.removeChild(divContainer);
+                localStorage.removeItem('data');
+            });
+
+            divContainer.appendChild(noteTextarea);
+            divContainer.appendChild(trashIcon);
+            inputContainer.appendChild(divContainer);
+
+            noteTextarea.addEventListener('input', () => {
+                localStorage.setItem("data", noteTextarea.value);
+            });
+
+            // Load existing data from localStorage
+            showTask(noteTextarea);
+        });
+
+        function showTask(noteTextarea) {
+            const savedData = localStorage.getItem("data");
+            if (savedData) {
+                noteTextarea.value = savedData;
+            }
+        }
+    </script>
+</body>
+</html>
